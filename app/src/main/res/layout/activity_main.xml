@@ -5,18 +5,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="관광지별 날씨 찾기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintVertical_bias="0.0"
+        android:gravity="center"
+        android:background="@color/material_dynamic_neutral90" />
 
     <EditText
         android:id="@+id/pageNo"
@@ -24,7 +27,8 @@
         android:layout_height="wrap_content"
         android:text="pageNo"
         tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="75dp" />
+        tools:layout_editor_absoluteY="75dp"
+        android:background="@color/white" />
 
     <EditText
         android:id="@+id/numOfRows"
@@ -32,7 +36,8 @@
         android:layout_height="wrap_content"
         android:text="numOfRows"
         tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="142dp" />
+        tools:layout_editor_absoluteY="142dp"
+        android:background="@color/white" />
 
     <EditText
         android:id="@+id/curDate"
@@ -40,7 +45,8 @@
         android:layout_height="wrap_content"
         android:text="curDate"
         tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="218dp" />
+        tools:layout_editor_absoluteY="218dp"
+        android:background="@color/white" />
 
     <EditText
         android:id="@+id/hour"
@@ -48,7 +54,8 @@
         android:layout_height="wrap_content"
         android:text="Hour"
         tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="291dp" />
+        tools:layout_editor_absoluteY="291dp"
+        android:background="@color/white" />
 
     <EditText
         android:id="@+id/id"
@@ -56,7 +63,8 @@
         android:layout_height="wrap_content"
         android:text="id"
         tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="356dp" />
+        tools:layout_editor_absoluteY="356dp"
+        android:background="@color/white" />
 
     <Button
         android:id="@+id/button"
