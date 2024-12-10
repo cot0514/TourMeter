@@ -9,69 +9,79 @@
     android:background="@drawable/background">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:text="관광지별 날씨 찾기"
+        android:background="@color/material_dynamic_neutral90"
+        android:gravity="center"
+        android:text="관광기후지수찾기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:gravity="center"
-        android:background="@color/material_dynamic_neutral90" />
-
-    <EditText
-        android:id="@+id/pageNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="pageNo"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="75dp"
-        android:background="@color/white" />
-
-    <EditText
-        android:id="@+id/numOfRows"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="numOfRows"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="142dp"
-        android:background="@color/white" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/curDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/white"
         android:text="curDate"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="218dp"
-        android:background="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/hour"
+        android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hour"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="291dp"
-        android:background="@color/white" />
-
-    <EditText
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="id"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="356dp"
-        android:background="@color/white" />
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:text="Day"
+        app:layout_constraintStart_toEndOf="@+id/curDate"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="18dp"
         android:text="검색"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="423dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/curDate" />
+
+    <Spinner
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/day"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Spinner
+        android:id="@+id/district"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/city" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="75dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/city"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
