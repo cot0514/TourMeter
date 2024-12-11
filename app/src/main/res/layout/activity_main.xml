@@ -1,50 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/background">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:text="Find weather score" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="@color/material_dynamic_neutral90"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:gravity="center"
-        android:text="관광기후지수찾기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:text="검색할 날짜와 범위, 그리고 지역을 입력하세요" />
 
-    <EditText
-        android:id="@+id/curDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/white"
-        android:text="curDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/white"
-        android:text="Day"
-        app:layout_constraintStart_toEndOf="@+id/curDate"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/curDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                android:hint="날짜" />
+
+            <EditText
+                android:id="@+id/day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                android:hint="Day" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/city"
+                android:layout_margin="10dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/district"
+                android:layout_margin="10dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
@@ -52,27 +77,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
-        android:text="검색"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/curDate" />
+        android:text="검색" />
 
-    <Spinner
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toEndOf="@+id/day"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <Spinner
-        android:id="@+id/district"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/city" />
 
     <TextView
         android:id="@+id/id"
@@ -80,8 +87,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="75dp"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/city"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/uuu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="" />
+
+</LinearLayout>

@@ -25,17 +25,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
     String key = "Y8du4%2B8y%2BfX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm%2BR5gXUHatD4V7dQ0oDspWYg%3D%3D";
-    String main = "http://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmldx1";
+    String main = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmldx1";
 
     EditText date;
     EditText day;
     EditText id;
 
-     static RequestQueue queue;
+    static RequestQueue queue;
 
     private List<SettingData> locations = new ArrayList<SettingData>();
     private List<String> cityList = new ArrayList<String>();
@@ -114,15 +117,14 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        info.curDate = date.getText().toString();
-        info.day = day.getText().toString();
-        info.id = cityId.getText().toString();
-
         Button button = findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                info.setCurDate(date.getText().toString());
+                info.setDay(day.getText().toString());
+                info.setId(cityId.getText().toString());
                 makeRequest(info);
             }
         });
@@ -135,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
     public void makeRequest(UrlInfo info) {
         String url = main +
                 "?ServiceKey=" + key +
-                "&PageNo=1" +
-                "&numOfRows=" + info.day +
+                "&pageNo=1" +
+                "&numOfRows=" + info.getDay() +
                 "&dataType=JSON" +
-                "&CURRENT_DATE=" + info.curDate +
-                "&DAY=" + info.day +
-                "&CITY_AREA_ID=" + info.id;
+                "&CURRENT_DATE=" + info.getCurDate() +
+                "&DAY=" + info.getDay() +
+                "&CITY_AREA_ID=" + info.getId();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -165,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
     public void processResponse(String response) {
         Gson gson = new Gson();
         WeatherList weatherList = gson.fromJson(response, WeatherList.class);
-
 
 
     }
