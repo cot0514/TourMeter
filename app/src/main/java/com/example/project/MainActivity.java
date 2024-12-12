@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,13 +22,17 @@ import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     EditText id;
 
     static RequestQueue queue;
+
+    WeatherAdapter adapter;
+    RecyclerView recyclerView;
 
     private List<SettingData> locations = new ArrayList<SettingData>();
     private List<String> cityList = new ArrayList<String>();
@@ -132,11 +140,19 @@ public class MainActivity extends AppCompatActivity {
         if (queue == null) {
             queue = Volley.newRequestQueue(getApplicationContext());
         }
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new WeatherAdapter();
+        recyclerView.setAdapter(adapter);
     }
 
     public void makeRequest(UrlInfo info) {
         String url = main +
-                "?ServiceKey=" + key +
+                "?serviceKey=" + key +
                 "&pageNo=1" +
                 "&numOfRows=" + info.getDay() +
                 "&dataType=JSON" +
@@ -144,7 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 "&DAY=" + info.getDay() +
                 "&CITY_AREA_ID=" + info.getId();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        String sample = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmIdx1?serviceKey=Y8du4%2B8y%2BfX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm%2BR5gXUHatD4V7dQ0oDspWYg%3D%3D&pageNo=1&numOfRows=10&dataType=JSON&CURRENT_DATE=20241210&DAY=3&CITY_AREA_ID=5013000000";
+
+        Log.d("API_URL", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, sample,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -156,19 +176,37 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        Log.e("API_ERROR", error.toString());
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            String responseBody = new String(error.networkResponse.data);
+                            Log.e("API_ERROR", "Error Response: " + responseBody);
+                        } else {
+                            Log.e("API_ERROR", error.toString());
+                        }
                     }
-                });
+                }) {
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<String,String>();
 
+                return params;
+            }
+        };
+
+        stringRequest.setShouldCache(false);
         queue.add(stringRequest);
     }
 
     public void processResponse(String response) {
         Gson gson = new Gson();
-        WeatherList weatherList = gson.fromJson(response, WeatherList.class);
+        Weather weatherList = gson.fromJson(response, Weather.class);
 
+        Weather.Body body = weatherList.response.body;
 
+        for (Weather.Item item : body.items.item) {
+
+            adapter.addItem(item);
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     private void loadCSVData() {
