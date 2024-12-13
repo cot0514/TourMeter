@@ -36,8 +36,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    String key = "Y8du4%2B8y%2BfX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm%2BR5gXUHatD4V7dQ0oDspWYg%3D%3D";
-    String main = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmldx1";
+    String key = "Y8du4+8y+fX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm+R5gXUHatD4V7dQ0oDspWYg==";
+    String main = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmIdx1";
 
     EditText date;
     EditText day;
@@ -151,48 +151,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeRequest(UrlInfo info) {
-        String url = main +
-                "?serviceKey=" + key +
-                "&pageNo=1" +
-                "&numOfRows=" + info.getDay() +
-                "&dataType=JSON" +
-                "&CURRENT_DATE=" + info.getCurDate() +
-                "&DAY=" + info.getDay() +
-                "&CITY_AREA_ID=" + info.getId();
+        try {
+            String url = main +
+            "?serviceKey=" + URLEncoder.encode(key, "UTF-8") +
+            "&pageNo=1" +
+            "&numOfRows=" + URLEncoder.encode(info.getDay(), "UTF-8") +
+            "&dataType=JSON" +
+            "&CURRENT_DATE=" + URLEncoder.encode(info.getCurDate(), "UTF-8") +
+            "&DAY=" + URLEncoder.encode(info.getDay(), "UTF-8") +
+            "&CITY_AREA_ID=" + URLEncoder.encode(info.getId(), "UTF-8");
+
+            Log.d("API_URL", url);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d("API_RESPONSE", response);
+                            processResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                                String responseBody = new String(error.networkResponse.data);
+                                Log.e("API_ERROR", "Error Response: " + responseBody);
+                            } else {
+                                Log.e("API_ERROR", error.toString());
+                            }
+                        }
+                    }) {
+                protected Map<String, String> getParams() {
+                    Map<String,String> params = new HashMap<String,String>();
+
+                    return params;
+                }
+            };
+
+            stringRequest.setShouldCache(false);
+            queue.add(stringRequest);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
         String sample = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmIdx1?serviceKey=Y8du4%2B8y%2BfX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm%2BR5gXUHatD4V7dQ0oDspWYg%3D%3D&pageNo=1&numOfRows=10&dataType=JSON&CURRENT_DATE=20241210&DAY=3&CITY_AREA_ID=5013000000";
 
-        Log.d("API_URL", url);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, sample,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("API_RESPONSE", response);
-                        processResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            String responseBody = new String(error.networkResponse.data);
-                            Log.e("API_ERROR", "Error Response: " + responseBody);
-                        } else {
-                            Log.e("API_ERROR", error.toString());
-                        }
-                    }
-                }) {
-            protected Map<String, String> getParams() {
-                Map<String,String> params = new HashMap<String,String>();
-
-                return params;
-            }
-        };
-
-        stringRequest.setShouldCache(false);
-        queue.add(stringRequest);
     }
 
     public void processResponse(String response) {
