@@ -43,7 +43,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         holder.tci.setText(item.kmaTci);
 
         switch (item.TCI_GRADE) {
-            case "매우 좋음":
+            case "매우좋음":
                 holder.tci_grade.setImageResource(R.drawable.very_good);
                 holder.itemView.setBackgroundResource(R.drawable.sky_blue);
                 break;
