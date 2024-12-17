@@ -29,8 +29,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.net.URL;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.Map;
 
@@ -144,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new WeatherAdapter();
@@ -197,13 +197,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String sample = "https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmIdx1?serviceKey=Y8du4%2B8y%2BfX2MHxWxQ63PKe5MiTdnI3Slf2J3tb0KgHK6uqDT5VzuIhae8pKxfm%2BR5gXUHatD4V7dQ0oDspWYg%3D%3D&pageNo=1&numOfRows=10&dataType=JSON&CURRENT_DATE=20241210&DAY=3&CITY_AREA_ID=5013000000";
-
     }
 
     public void processResponse(String response) {
         Gson gson = new Gson();
         Weather weatherList = gson.fromJson(response, Weather.class);
+
+        adapter.clearItem();
 
         Weather.Body body = weatherList.response.body;
 
